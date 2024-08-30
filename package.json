@@ -1,6 +1,6 @@
 {
   "name": "soham",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "soham's resume",
   "main": "index.js",
   "bin": {
