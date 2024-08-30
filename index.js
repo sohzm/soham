@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const text = `
 
 \x1b[1;34mSoham Bharambe\x1b[0m
