@@ -1,5 +1,28 @@
 #!/usr/bin/env node
 
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
+const { exec } = require('child_process');
+
+const pdfUrl = 'https://soham.sh/Soham_Bharambe-Resume.pdf';
+const outputFile = path.join(__dirname, 'Soham_Bharambe-Resume.pdf');
+
+function downloadPDF() {
+    const file = fs.createWriteStream(outputFile);
+    https.get(pdfUrl, (response) => {
+        response.pipe(file);
+        file.on('finish', () => {
+            file.close(() => {
+                console.log(`PDF downloaded to ${outputFile}`);
+            });
+        });
+    }).on('error', (err) => {
+        fs.unlink(outputFile, () => {}); // Delete the file async. (But we don't check the result)
+        console.error(`Error downloading the PDF: ${err.message}`);
+    });
+}
+
 const text = `
 
 \x1b[1;34mSoham Bharambe\x1b[0m
@@ -48,4 +71,10 @@ function printCharByChar() {
     }
 }
 
-printCharByChar();
+
+
+if (process.argv.includes('--download-pdf')) {
+    downloadPDF();
+} else {
+    printCharByChar();
+}
